@@ -1,0 +1,44 @@
+page { background: #f7f6f1; color: #243b32; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 28rpx; }
+view, text, button, input, textarea { box-sizing: border-box; }
+button { margin: 0; border: 0; border-radius: 22rpx; font-size: 28rpx; line-height: 1.45; font-weight: 600; }
+button::after { border: none; }
+button[disabled] { opacity: .48; }
+.screen { padding: 34rpx 34rpx calc(42rpx + env(safe-area-inset-bottom)); }
+.eyebrow { color: #78887e; font-size: 20rpx; letter-spacing: 4rpx; font-weight: 600; }
+.page-title { display: block; margin-top: 14rpx; font-size: 50rpx; line-height: 1.3; font-weight: 650; letter-spacing: -1rpx; }
+.page-subtitle { display: block; margin-top: 16rpx; color: #7a877e; font-size: 25rpx; line-height: 1.7; }
+.row { display: flex; align-items: center; }
+.between { justify-content: space-between; }
+.grow { flex: 1; min-width: 0; }
+.muted { color: #829087; }
+.small { font-size: 23rpx; line-height: 1.65; }
+.card { background: #fffefb; border: 1rpx solid #e9ece5; border-radius: 28rpx; }
+.section-title { font-weight: 650; font-size: 29rpx; }
+.section-space { margin-top: 36rpx; }
+.primary { background: #275c47; color: #fffef9; padding: 26rpx 24rpx; }
+.secondary { background: #ebf0e8; color: #315d49; padding: 25rpx 24rpx; }
+.text-button { background: transparent; color: #3f6853; padding: 14rpx 0; font-size: 24rpx; }
+.danger { color: #ad4f41; background: #faf0eb; padding: 25rpx; }
+.notice { padding: 23rpx 26rpx; background: #eeefe7; color: #727d70; border-radius: 20rpx; font-size: 23rpx; line-height: 1.8; }
+.orange { color: #bd7543; }
+.pill { display: inline-flex; align-items: center; border-radius: 999rpx; padding: 8rpx 15rpx; background: #f2f1e9; color: #7c8578; font-size: 21rpx; line-height: 1.4; }
+.pill.green { background: #e7eee4; color: #447459; }
+.pill.orange { background: #faeee1; color: #bd7543; }
+.avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 78rpx; height: 78rpx; border-radius: 24rpx; background: #e8eddf; color: #587459; font-size: 31rpx; font-weight: 600; }
+.avatar.weibo { background: #f5eade; color: #ba8050; }
+.empty { text-align: center; padding: 66rpx 32rpx; }
+.empty-symbol { font-size: 48rpx; color: #769474; margin-bottom: 22rpx; }
+.empty-title { font-size: 31rpx; font-weight: 600; }
+.empty-text { margin-top: 15rpx; font-size: 25rpx; color: #879087; line-height: 1.85; }
+.empty .primary { margin-top: 30rpx; }
+.loading { text-align: center; padding: 60rpx 20rpx; color: #879087; font-size: 25rpx; }
+.divider { height: 1rpx; background: #eceee7; }
+.field-label { display: block; margin-bottom: 17rpx; font-size: 26rpx; font-weight: 600; }
+.field-tip { display: block; margin-top: 14rpx; font-size: 23rpx; color: #889084; line-height: 1.7; }
+.field-input { width: 100%; min-height: 94rpx; border: 1rpx solid #e7e9e1; border-radius: 20rpx; background: #fffefa; padding: 20rpx 24rpx; font-size: 28rpx; color: #273d32; }
+.field-textarea { height: 185rpx; line-height: 1.7; }
+.error { color: #b65545; display: block; font-size: 23rpx; margin-top: 12rpx; }
+.chevron { color: #9ba699; margin-left: 16rpx; font-size: 32rpx; }
+.actions { margin-top: 30rpx; }
+.actions button + button { margin-top: 18rpx; }
+.button-caption { display: block; text-align: center; color: #8b9389; font-size: 22rpx; line-height: 1.7; margin-top: 17rpx; }
