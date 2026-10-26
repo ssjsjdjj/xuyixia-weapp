@@ -1,0 +1,4 @@
+@import "../shared.wxss";
+.privacy-section { margin-top: 39rpx; }
+.privacy-copy { font-size: 25rpx; color: #7f8a79; line-height: 1.95; margin-top: 17rpx; text-align: justify; }
+.privacy-screen .page-title { font-size: 45rpx; }

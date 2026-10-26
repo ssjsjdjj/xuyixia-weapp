@@ -1,0 +1,12 @@
+<view class="screen privacy-screen">
+  <text class="eyebrow">你的日常，由你掌握</text>
+  <text class="page-title">隐私说明</text>
+  <text class="page-subtitle">适用于当前版本「续一下」。更新日期：2026年10月26日。</text>
+  <view class="notice section-space">当前使用{{cloud ? '微信云开发存储' : '本机存储'}}。你可以在「设置」中清空当前存储中的任务与记录。</view>
+  <view class="privacy-section"><text class="section-title">我们处理哪些信息</text><view class="privacy-copy">你主动填写的任务名称、平台类型、希望提醒的时间、备注、快捷文案，以及你确认完成的日期和时间。这些信息用于展示清单、记录完成情况和配置提醒。</view><view class="privacy-copy">不需要你提供抖音或微博的账号密码，不读取聊天内容、好友列表、火花状态或微博打卡状态。</view></view>
+  <view class="privacy-section"><text class="section-title">数据保存在哪里</text><view class="privacy-copy">{{cloud ? '当前版本将数据保存到开发者配置的微信云开发环境，使用微信云开发提供的当前用户身份隔离个人任务和记录。云端读写需要网络连接。' : '当前版本将任务、记录和偏好设置保存在本机的小程序缓存中。更换设备、删除小程序或清理微信缓存后，数据可能无法恢复。当前模式不提供跨设备同步。'}}</view></view>
+  <view class="privacy-section"><text class="section-title">哪些操作需要你的授权</text><view class="privacy-copy">微信消息提醒：只有你点击申请后才会调用微信订阅授权。是否获得授权、能发送哪些消息，以微信弹窗和实际配置为准。</view><view class="privacy-copy">手机日历：只有你主动添加提醒时才会申请相关权限，写入所选任务的名称、时间等必要信息。日历由手机系统管理，任务修改、暂停或删除后，请自行检查已有日历事项。</view><view class="privacy-copy">剪贴板：只有你点击「复制文案」时，才会把该文案写入剪贴板，方便你到对应平台粘贴。</view></view>
+  <view class="privacy-section"><text class="section-title">如何管理和删除</text><view class="privacy-copy">你可以编辑或删除任务，撤销完成确认，也可以在「设置」中清空{{cloud ? '我的云端数据' : '本机数据'}}。清空操作无法恢复，不会同时删除手机日历中已经添加的提醒。</view></view>
+  <view class="privacy-section"><text class="section-title">平台操作与提醒边界</text><view class="privacy-copy">本小程序提供清单、完成确认和经授权的提醒入口。抖音互动、续火花及微博打卡需要你自行在对应平台完成；这里的「已完成」仅代表你的手动确认。</view></view>
+  <view class="privacy-section"><text class="section-title">离线缓存与共同任务</text><view class="privacy-copy">云模式还会在本机保存当前已验证用户的任务缓存和待同步操作。每次重新打开需要先联网验证当前身份，再使用离线缓存；出现同步冲突时保留本机草稿，不会静默覆盖云端数据。</view><view class="privacy-copy">共同任务由你主动发起或同意加入，参与双方可看到共同任务名称、平台及本工具中的当日确认状态。不会向对方开放私人任务、备注、文案或聊天内容。邀请24小时过期，重新生成会使旧邀请失效。你可以退出，发起人可以关闭共同任务。</view></view>
+</view>
