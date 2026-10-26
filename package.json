@@ -1,0 +1,13 @@
+{
+  "name": "xuyixia-weapp",
+  "version": "0.3.0",
+  "private": true,
+  "description": "原生微信小程序：续火花与打卡提醒",
+  "scripts": {
+    "test": "node --test tests/*.test.js cloudfunctions/tests/*.test.js",
+    "check": "node scripts/check-project.js",
+    "preview:build": "node scripts/build-preview.js",
+    "policy:sync": "node scripts/sync-policy.js"
+  },
+  "engines": { "node": ">=20" }
+}
