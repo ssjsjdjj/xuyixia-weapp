@@ -1,0 +1,20 @@
+@import "../shared.wxss";
+.form-section { margin-top: 37rpx; }
+.platform-options { margin-right: -15rpx; }
+.platform-option { display: flex; align-items: center; width: calc(50% - 15rpx); border: 2rpx solid #e6e8df; padding: 24rpx 18rpx; margin-right: 15rpx; border-radius: 21rpx; font-size: 25rpx; background: #fffefa; }
+.platform-option.selected { border-color: #6b8861; background: #edf1e6; }
+.platform-symbol { margin-right: 12rpx; color: #67805d; font-size: 30rpx; }
+.option-check { margin-left: auto; padding-left: 4rpx; color: #4e7251; font-size: 23rpx; }
+.time-value { font-size: 35rpx; letter-spacing: 2rpx; font-weight: 600; }
+.time-unit { color: #8d9689; font-size: 24rpx; }
+.optional { color: #a0a696; font-size: 22rpx; font-weight: 400; margin-left: 9rpx; }
+.note-area { height: 146rpx; }
+.enabled-card { padding: 23rpx; margin-top: 30rpx; }
+.enabled-title { font-size: 27rpx; font-weight: 600; }
+.enabled-card .field-tip { margin-top: 8rpx; font-size: 21rpx; }
+.enabled-card switch { transform: scale(.85); transform-origin: right center; }
+.repeat-options { gap: 10rpx; flex-wrap: wrap; }
+.repeat-options button,.week-options button { min-height: 44px; padding: 16rpx 20rpx; background: #ecefe5; color: #536d52; font-size: 25rpx; }
+.repeat-options .selected,.week-options .selected { background: #315d49; color: #fff; }
+.week-options { display: flex; gap: 8rpx; flex-wrap: wrap; margin-top: 18rpx; }
+.week-options button { flex: 1; min-width: 60rpx; padding: 12rpx 5rpx; }
