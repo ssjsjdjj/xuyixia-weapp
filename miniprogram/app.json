@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/today/index",
+    "pages/records/index",
+    "pages/settings/index",
+    "pages/task-form/index",
+    "pages/task-detail/index",
+    "pages/privacy/index",
+    "pages/tasks/index",
+    "pages/shared/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "续一下",
+    "navigationBarBackgroundColor": "#F6F5F2",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F6F5F2",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#6B7169",
+    "selectedColor": "#344B36",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/today/index", "text": "今日" },
+      { "pagePath": "pages/records/index", "text": "记录" },
+      { "pagePath": "pages/settings/index", "text": "设置" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

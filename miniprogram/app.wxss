@@ -1,0 +1,6 @@
+page { background: #f6f5f2; color: #262824; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 28rpx; }
+view, text, button, input, textarea { box-sizing: border-box; }
+button { font-size: 28rpx; font-weight: 400; }
+button::after { border: 0; }
+button[disabled] { opacity: .55; }
+input, textarea { font-size: 30rpx; }
