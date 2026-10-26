@@ -1,0 +1,9 @@
+@import "../shared.wxss";
+.joint-card { padding: 28rpx; margin-top: 26rpx; }
+.joint-card .field-input { margin-top: 20rpx; }
+.joint-card .primary,.joint-card .secondary { margin-top: 18rpx; }
+.state-grid { display: flex; gap: 20rpx; margin: 24rpx 0; }
+.state-grid > view { flex: 1; background: #edf1e8; color: #315d49; border-radius: 16rpx; padding: 22rpx; }
+.platform-picks { gap: 12rpx; margin-top: 18rpx; }
+.platform-picks button { flex: 1; min-height: 44px; padding: 16rpx; background: #edf1e8; color: #315d49; }
+.platform-picks .chosen { background: #315d49; color: #fff; }
