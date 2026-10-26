@@ -1,0 +1,13 @@
+<view class="screen">
+  <text class="eyebrow">留住每一次惦记</text>
+  <text class="page-title">确认记录</text>
+  <text class="page-subtitle">你确认过的日常，都好好记在这里。</text>
+  <view wx:if="{{syncMessage}}" class="notice section-space">{{syncMessage}}</view>
+  <view class="date-card card row between"><button class="date-arrow" aria-label="前一天" bindtap="onPrevious" disabled="{{loading || !!busyId}}">‹</button><picker mode="date" value="{{date}}" end="{{today}}" bindchange="onDate" disabled="{{loading || !!busyId}}"><view class="date-picker"><view class="selected-date">{{dateLabel}}</view><view class="date-picker-caption">{{date}} <text>⌄</text></view></view></picker><button class="date-arrow" aria-label="后一天" bindtap="onNext" disabled="{{date >= today || loading || !!busyId}}">›</button></view>
+  <view class="row between section-space"><text class="section-title">已确认 <text class="record-count">{{records.length}}</text> 件小事</text><button wx:if="{{date !== today}}" class="text-button" bindtap="onToday" disabled="{{loading || !!busyId}}">回到今天</button></view>
+  <view wx:if="{{loading}}" class="loading">正在翻开这一天…</view>
+  <view wx:elif="{{loadError}}" class="card empty section-space"><view class="empty-title">记录暂时未能加载</view><button class="secondary" bindtap="refresh">重新加载</button></view>
+  <view wx:elif="{{records.length === 0}}" class="card empty section-space"><view class="empty-title">这一天还没有确认记录</view><view class="empty-text">没有记录不代表平台操作未完成。</view><button class="secondary" bindtap="onGoToday">去今日清单</button></view>
+  <view wx:else class="record-list"><view wx:for="{{records}}" wx:key="taskId" class="card record-card row"><view class="avatar {{item.type}}">{{item.avatar}}</view><view class="record-info grow"><view class="record-name">{{item.name}}</view><view class="record-meta">{{item.platformLabel}}<text wx:if="{{item.timeLabel}}"> · {{item.timeLabel}}</text></view></view><button class="undo-button" data-id="{{item.taskId}}" bindtap="onUndo" loading="{{busyId === item.taskId}}" disabled="{{!!busyId}}">撤销</button></view></view>
+  <text class="record-footnote">这里只保存你的完成确认，不读取平台火花或打卡状态。</text>
+</view>
