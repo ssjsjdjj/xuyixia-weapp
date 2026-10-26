@@ -1,0 +1,8 @@
+{
+  "enabled": false,
+  "templateId": "",
+  "templateFields": {},
+  "page": "pages/today/index",
+  "miniprogramState": "developer",
+  "maxDelayMinutes": 15
+}
