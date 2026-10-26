@@ -1,0 +1,47 @@
+@import "../shared.wxss";
+.header-row { margin-top: 4rpx; }
+.date-label { color: #8b9287; font-size: 22rpx; }
+.page-title { margin-top: 20rpx; }
+.daily-card { background: #2c5946; color: #fffdf4; border-radius: 26rpx; margin-top: 20rpx; padding: 24rpx; }
+.daily-label { font-size: 24rpx; color: #d0dccb; }
+.count { margin-top: 12rpx; }
+.count-number { font-size: 48rpx; font-weight: 600; line-height: 1; }
+.count-total { font-size: 25rpx; color: #c4d3bd; }
+.daily-mark { display: flex; align-items: center; justify-content: center; color: #e7b67a; background: #3b6550; width: 88rpx; height: 88rpx; border-radius: 50%; font-size: 48rpx; margin-right: 5rpx; }
+.progress-track { height: 8rpx; border-radius: 10rpx; background: #4b7058; margin-top: 22rpx; overflow: hidden; }
+.progress-fill { background: #dfb57d; height: 100%; border-radius: 10rpx; transition: width .3s; }
+.progress-caption { margin-top: 18rpx; color: #d5decd; font-size: 22rpx; }
+.add-button { color: #3f6d51; font-size: 25rpx; padding: 13rpx 20rpx; background: #e9eee2; border-radius: 15rpx; }
+.search-box { background: #eeefe8; border-radius: 20rpx; padding: 0 21rpx; height: 82rpx; margin-top: 25rpx; }
+.search-symbol { font-size: 38rpx; color: #8d998b; margin-right: 15rpx; }
+.search-input { flex: 1; font-size: 25rpx; height: 80rpx; }
+.search-placeholder { color: #99a091; }
+.filter-row { margin-top: 24rpx; margin-bottom: 25rpx; }
+.filter { padding: 13rpx 22rpx; margin-right: 11rpx; color: #8b9486; font-size: 23rpx; border-radius: 999rpx; }
+.filter.active { color: #365e44; background: #e5eadc; font-weight: 600; }
+.task-card { margin-bottom: 19rpx; padding: 26rpx 25rpx 20rpx; }
+.task-info { padding-left: 20rpx; padding-right: 10rpx; }
+.task-name { font-size: 29rpx; font-weight: 600; line-height: 1.5; word-break: break-all; }
+.task-meta { font-size: 22rpx; color: #8b9486; margin-top: 8rpx; }
+.meta-dot { margin: 0 12rpx; }
+.check-button { display: flex; align-items: center; justify-content: center; width: 52rpx; height: 52rpx; flex-shrink: 0; min-height: 0; padding: 0; border: 2rpx solid #d9dfd2; border-radius: 50%; color: #fffdf5; background: transparent; font-size: 29rpx; }
+.check-button.checked { border-color: #5d8062; background: #5d8062; }
+.task-footer { border-top: 1rpx solid #f0f0e9; margin-top: 23rpx; padding-top: 18rpx; }
+.task-note { font-size: 22rpx; color: #939a8c; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 76%; }
+.is-complete { background: #f2f4ec; }
+.is-complete .task-name { color: #7e8d7b; }
+.is-complete .avatar { opacity: .65; }
+.footnote { margin: 30rpx 12rpx 0; color: #a1a696; font-size: 21rpx; line-height: 1.8; text-align: center; }
+.reminder-banner { margin-top: 20rpx; padding: 0 18rpx; border-radius: 18rpx; background: #f1ecdf; color: #8c653e; font-size: 24rpx; }
+.reminder-banner .text-button { flex-shrink: 0; padding-left: 12rpx; min-height: 88rpx; }
+.task-actions { margin-top: 22rpx; gap: 14rpx; }
+.task-actions button { flex: 1; padding: 20rpx 8rpx; min-height: 44px; font-size: 28rpx; }
+.task-note { display: block; max-width: 100%; margin-top: 16rpx; }
+.task-info { padding-right: 12rpx; }
+.filter { min-height: 44px; background: transparent; font-size: 26rpx; }
+.filter-row { margin-top: 12rpx; margin-bottom: 12rpx; }
+.clear-search { min-height: 88rpx; padding: 12rpx; background: transparent; color: #48664b; font-size: 24rpx; }
+.undo-notice { padding: 6rpx 18rpx; margin-bottom: 16rpx; background: #e8efe2; color: #48664b; border-radius: 16rpx; font-size: 24rpx; }
+.undo-notice .grow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.undo-notice button { flex-shrink: 0; padding-left: 16rpx; min-height: 88rpx; }
+.task-meta { font-size: 25rpx; }

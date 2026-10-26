@@ -1,0 +1,26 @@
+<view class="screen">
+  <view class="row between header-row"><text class="eyebrow">续一下 · 每日提醒</text><text class="date-label">{{dateLabel}}</text></view>
+  <text class="page-title">今日待办</text>
+  <view wx:if="{{syncMessage}}" class="notice section-space"><text>{{syncMessage}}</text><button class="text-button" bindtap="onReminderSettings">查看同步状态</button></view>
+  <view class="reminder-banner row between"><text class="grow">{{reminderHint}}</text><button class="text-button" bindtap="onReminderSettings">设置提醒 ›</button></view>
+  <view class="daily-card">
+    <view class="row between"><view><text class="daily-label">还有 </text><text class="count-number">{{remaining}}</text><text class="daily-label"> 项待确认</text></view><text class="count-total">已确认 {{completed}} / {{total}}</text></view>
+    <view class="progress-track"><view class="progress-fill" style="width:{{progress}}%"></view></view>
+    <view class="progress-caption">{{total === 0 ? '新建任务后，再选择提醒方式' : remaining === 0 ? '今天的清单都已确认' : '请先在对应平台处理，再回来确认'}}</view>
+  </view>
+  <view class="row between section-space"><button class="text-button" bindtap="onManage">全部任务 ›</button><button class="text-button" bindtap="onShared">共同任务 ›</button><button class="add-button" bindtap="onCreate">＋ 新建</button></view>
+  <view class="search-box row"><input class="search-input" placeholder="搜索好友、打卡目标" placeholder-class="search-placeholder" value="{{query}}" bindinput="onSearch" maxlength="60" confirm-type="search" /><button wx:if="{{query}}" class="clear-search" bindtap="onResetFilters" aria-label="清除搜索和筛选">清除</button></view>
+  <view class="filter-row row"><button class="filter {{filter === 'all' ? 'active' : ''}}" data-type="all" bindtap="onFilter">全部</button><button class="filter {{filter === 'douyin' ? 'active' : ''}}" data-type="douyin" bindtap="onFilter">抖音</button><button class="filter {{filter === 'weibo' ? 'active' : ''}}" data-type="weibo" bindtap="onFilter">微博</button></view>
+  <view wx:if="{{lastAction}}" class="undo-notice row between"><text class="grow">{{lastAction.name}}{{lastAction.completed ? '已确认' : '已撤销确认'}}</text><button class="text-button" bindtap="onUndoLast" disabled="{{!!busyId}}">撤销刚才操作</button></view>
+  <view wx:if="{{loading}}" class="loading">正在加载清单…</view>
+  <view wx:elif="{{loadError}}" class="card empty"><view class="empty-title">清单暂时未能加载</view><view class="empty-text">原有任务未被清除，请稍后重试。</view><button class="secondary" bindtap="refresh">重新加载</button></view>
+  <block wx:else>
+    <view wx:for="{{visibleTasks}}" wx:key="id" class="card task-card {{item.completed ? 'is-complete' : ''}}">
+      <view class="row"><view class="avatar {{item.type}}">{{item.avatar}}</view><view class="task-info grow"><view class="task-name">{{item.pinned ? '置顶 · ' : ''}}{{item.name}}</view><view class="task-meta">{{item.platformLabel}} · {{item.time}}</view><view class="task-meta">{{item.repeatLabel}}</view></view><text class="pill {{item.completed ? 'green' : 'orange'}}">{{item.completed ? '已确认' : '待确认'}}</text></view>
+      <text wx:if="{{item.note}}" class="task-note">{{item.note}}</text>
+      <view class="task-actions row"><button class="secondary" data-id="{{item.id}}" bindtap="onDetail">{{item.completed ? '查看详情' : '查看处理步骤'}}</button><button class="{{item.completed ? 'secondary' : 'primary'}}" data-id="{{item.id}}" bindtap="onComplete" loading="{{busyId === item.id}}" disabled="{{!!busyId}}">{{item.completed ? '撤销确认' : '确认已完成'}}</button></view>
+    </view>
+    <view wx:if="{{visibleTasks.length === 0}}" class="card empty"><view class="empty-title">{{total === 0 ? (pausedCount ? '今天没有安排' : '还没有提醒任务') : '没有匹配的任务'}}</view><view class="empty-text">{{total === 0 ? (pausedCount ? '其他任务可能已暂停，或按周期在其他日期出现。' : '先添加一个抖音好友或微博打卡目标。') : '换个关键词，或清除筛选再查看。'}}</view><button wx:if="{{total === 0}}" class="primary" bindtap="onCreate">新建提醒任务</button><button wx:else class="secondary" bindtap="onResetFilters">清除搜索和筛选</button><button wx:if="{{pausedCount}}" class="text-button" bindtap="onManage">查看其他任务（{{pausedCount}}）</button></view>
+  </block>
+  <view class="footnote">“已确认”是你的手动记录，不代表平台火花或打卡状态。</view>
+</view>
