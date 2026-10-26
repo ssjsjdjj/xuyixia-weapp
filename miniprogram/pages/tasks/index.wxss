@@ -1,0 +1,2 @@
+@import "../shared.wxss";
+.task-row { display: block; width: 100%; text-align: left; padding: 26rpx; margin-top: 20rpx; color: #31513e; }
