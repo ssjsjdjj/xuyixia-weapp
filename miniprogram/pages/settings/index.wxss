@@ -1,0 +1,20 @@
+@import "../shared.wxss";
+.preference-panel { padding: 26rpx; margin-top: 22rpx; }
+.preference-options { gap: 14rpx; margin-top: 18rpx; }
+.preference-options button { flex: 1; padding: 20rpx 12rpx; min-height: 44px; background: #e9eee4; color: #315d49; font-size: 25rpx; }
+.preference-options button.chosen { background: #315d49; color: #fff; }
+.preference-panel .secondary { margin-top: 22rpx; }
+.setting-group { overflow: hidden; margin-top: 22rpx; }
+.setting-row { padding: 28rpx 26rpx; }
+.setting-button { display: flex; text-align: left; width: 100%; background: transparent; border-radius: 0; font-weight: 400; }
+.setting-name { font-size: 27rpx; }
+.setting-tip { font-size: 22rpx; color: #929b8a; margin-top: 11rpx; line-height: 1.75; }
+.setting-value { font-size: 29rpx; color: #55754f; font-weight: 600; letter-spacing: 1rpx; }
+.reminder-notice { margin-top: 18rpx; font-size: 22rpx; }
+.mode-description { margin-top: 18rpx; }
+.danger-text { color: #a86753; }
+.about { text-align: center; padding: 49rpx 0 12rpx; }
+.about-name { font-size: 31rpx; font-weight: 600; color: #768369; }
+.about-name text { color: #bc9568; margin-left: 8rpx; }
+.about-copy { color: #9ba18e; font-size: 23rpx; margin-top: 13rpx; }
+.about-version { font-size: 19rpx; color: #b0b5a6; margin-top: 18rpx; }
