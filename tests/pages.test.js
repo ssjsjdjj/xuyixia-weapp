@@ -7,7 +7,7 @@ const { createRequire } = require('node:module');
 const { createLocalStore } = require('../miniprogram/services/store');
 const { todayKey, shiftDate, isTaskOnDate } = require('../miniprogram/utils/domain');
 
-function harness() {
+function harness(options = {}) {
   const memory = new Map(), calls = [];
   let confirm = true;
   const wx = {
@@ -27,11 +27,13 @@ function harness() {
   const app = { config: { storageMode: 'local', cloudEnabled: false }, store: createLocalStore(wx), reminders: { subscribe: async () => ({ status: 'unconfigured', message: '未配置' }), addCalendar: async () => ({ status: 'added', message: '已添加' }) } };
   function page(name) {
     const file = path.resolve(__dirname, '../miniprogram/pages', name, 'index.js');
+    const localRequire = createRequire(file);
     let definition;
     vm.runInNewContext(fs.readFileSync(file, 'utf8'), {
       Page: value => { definition = value; }, wx, getApp: () => app,
-      getCurrentPages: () => [{}, {}], require: createRequire(file),
-      console, Date, setTimeout, clearTimeout
+      getCurrentPages: () => [{}, {}], require: request => request === '../../utils/domain' && options.now ? { ...localRequire(request), todayKey: value => todayKey(value === undefined ? options.now() : value) } : localRequire(request),
+      console, Date: options.now ? class extends Date { static now() { return options.now(); } } : Date,
+      setTimeout: options.setTimeout || setTimeout, clearTimeout: options.clearTimeout || clearTimeout
     }, { filename: file });
     definition.data = structuredClone(definition.data);
     definition.setData = patch => Object.assign(definition.data, structuredClone(patch));
@@ -203,4 +205,66 @@ test('非今日周期不在首页但可在全部任务找到，共同任务本�
   const today=h.page('today');await today.refresh();assert.equal(today.data.total,0);assert.equal(today.data.pausedCount,1);
   const manage=h.page('tasks');await manage.refresh();assert.equal(manage.data.tasks.length,1);
   const shared=h.page('shared');shared.onLoad({});await shared.refresh();assert.equal(shared.data.cloud,false);assert.equal(shared.data.joints.length,0);
+});
+
+test('今日状态与平台组合筛选，清除搜索保留筛选且完成任务可找回', async () => {
+  const h=harness(),today=h.page('today');
+  const friend=await h.app.store.saveTask({type:'douyin',name:'好友甲',time:'21:00'});
+  const checkin=await h.app.store.saveTask({type:'weibo',name:'超话乙',time:'21:30'});
+  await h.app.store.setCompletion(friend.id,todayKey(),true);await today.refresh();
+  assert.deepEqual(Array.from(today.data.visibleTasks,task=>task.id),[checkin.id]);
+  today.onFilter({currentTarget:{dataset:{type:'douyin'}}});assert.equal(today.data.visibleTasks.length,0);
+  assert.equal(today.data.emptyAction,'confirmed');today.onEmptyAction();assert.equal(today.data.visibleTasks[0].id,friend.id);
+  today.onSearch({detail:{value:'不存在'}});assert.equal(today.data.visibleTasks.length,0);today.onClearSearch();
+  assert.equal(today.data.filter,'douyin');assert.equal(today.data.statusFilter,'confirmed');assert.equal(today.data.visibleTasks[0].id,friend.id);
+  assert.equal(today.data.statusCounts.all,1);assert.equal(today.data.statusCounts.confirmed,1);
+});
+
+test('确认后从待确认移出，离线撤销保持待同步提示并恢复任务',async()=>{
+  const h=harness(),today=h.page('today'),task=await h.app.store.saveTask({type:'douyin',name:'离线好友',time:'21:00'});
+  await today.refresh();await today.onComplete(event(task.id));assert.equal(today.data.visibleTasks.length,0);assert.equal(today.data.lastAction.id,task.id);
+  h.app.store.getSyncStatus=()=>({mode:'cloud',pendingCount:1});
+  await today.onUndoLast();assert.equal(today.data.visibleTasks[0].id,task.id);assert.equal(today.data.lastAction,null);
+  assert.equal(h.calls.filter(call=>call[0]==='toast').at(-1)[1],'已保存在本机，待同步');
+});
+
+test('刷新期间保留清单；读取失败保留旧数据并阻止确认，重试后恢复',async()=>{
+  const h=harness(),today=h.page('today'),task=await h.app.store.saveTask({type:'weibo',name:'保留的清单',time:'21:00'});
+  await today.refresh();const listTasks=h.app.store.listTasks;let release;
+  h.app.store.listTasks=()=>new Promise(resolve=>{release=resolve;});const refreshing=today.refresh();
+  assert.equal(today.data.loading,false);assert.equal(today.data.refreshing,true);assert.equal(today.data.visibleTasks[0].id,task.id);
+  release(await listTasks({includePaused:true}));await refreshing;assert.equal(today.data.refreshing,false);
+  h.app.store.listTasks=async()=>{throw new Error('cannot read');};await today.refresh();
+  assert.equal(today.data.stale,true);assert.equal(today.data.loadError,false);assert.equal(today.data.visibleTasks[0].id,task.id);
+  await today.onComplete(event(task.id));assert.equal((await h.app.store.listRecords({})).length,0);
+  h.app.store.listTasks=listTasks;await today.refresh();assert.equal(today.data.stale,false);await today.onComplete(event(task.id));assert.equal(today.data.completed,1);
+});
+
+test('今日刷新并发时旧结果不会覆盖新清单',async()=>{
+  const h=harness(),today=h.page('today'),waiting=[];
+  h.app.store.listTasks=()=>new Promise(resolve=>waiting.push(resolve));
+  const first=today.refresh(),second=today.refresh();
+  waiting[1]([{id:'new',name:'新清单',type:'douyin',time:'21:00',enabled:true}]);await second;
+  waiting[0]([{id:'old',name:'旧清单',type:'douyin',time:'21:00',enabled:true}]);await first;
+  assert.equal(today.data.tasks[0].id,'new');assert.equal(today.data.loading,false);
+});
+
+test('确认保存期间跨过零点不会把昨日操作记为今日撤销',async()=>{
+  let now=Date.parse('2026-10-26T15:59:59Z');const h=harness({now:()=>now}),today=h.page('today');
+  const task=await h.app.store.saveTask({type:'douyin',name:'零点好友',time:'21:00'});await today.refresh();
+  const save=h.app.store.setCompletion;let release;h.app.store.setCompletion=async(...args)=>{await new Promise(resolve=>{release=resolve;});return save(...args);};
+  const saving=today.onComplete(event(task.id));now=Date.parse('2026-10-26T16:00:01Z');await today.refresh();release();await saving;
+  assert.equal(today.data.date,'2026-10-27');assert.equal(today.data.lastAction,null);assert.equal(today.data.remaining,1);
+  const records=await h.app.store.listRecords({});assert.equal(records.length,1);assert.equal(records[0].date,'2026-10-26');
+});
+
+test('前台时间提示定时更新，跨日刷新清单，离开页面停止计时',async()=>{
+  let now=Date.parse('2026-10-26T12:59:59Z'),nextId=0;const timers=new Map();
+  const h=harness({now:()=>now,setTimeout:(callback,delay)=>{assert.equal(delay,30000);timers.set(++nextId,callback);return nextId;},clearTimeout:id=>timers.delete(id)});
+  await h.app.store.saveTask({type:'weibo',name:'时钟任务',time:'21:00'});const today=h.page('today');await today.onShow();
+  assert.equal(today.data.visibleTasks[0].timingKind,'soon');
+  now=Date.parse('2026-10-26T13:00:01Z');let callback=timers.values().next().value;timers.clear();callback();
+  assert.equal(today.data.visibleTasks[0].timingKind,'due');
+  now=Date.parse('2026-10-26T16:00:01Z');callback=timers.values().next().value;timers.clear();callback();await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(today.data.date,'2026-10-27');today.onHide();assert.equal(timers.size,0);assert.equal(today._visible,false);
 });
