@@ -1,6 +1,6 @@
 {
   "name": "xuyixia-weapp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "原生微信小程序：续火花与打卡提醒",
   "scripts": {
